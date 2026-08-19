@@ -3,14 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conta Roupas - Seu Inventário de Roupas</title>
+    <title>Conta Roupas - Inventário Completo</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
         <header>
+            <div class="header-actions">
+                <button class="btn-theme" id="btn-theme" onclick="toggleTheme()">🌙 Tema Escuro</button>
+                <button class="btn-export" id="btn-exportar" onclick="exportarDados()">📥 Exportar CSV</button>
+            </div>
             <h1>👕 Conta Roupas</h1>
-            <p>Gerencie seu inventário de roupas</p>
+            <p>Gerencie seu inventário de roupas com facilidade</p>
         </header>
 
         <main>
@@ -62,8 +66,23 @@
                     </div>
 
                     <div class="form-group">
+                        <label for="local">🏠 Local de Armazenamento:</label>
+                        <select id="local" required>
+                            <option value="">Selecione...</option>
+                            <option value="Corredor">🏠 Corredor</option>
+                            <option value="Prateleira">📦 Prateleira</option>
+                            <option value="Box">🎁 Box</option>
+                            <option value="Guarda-roupa">🚪 Guarda-roupa</option>
+                            <option value="Cômoda">🗄️ Cômoda</option>
+                            <option value="Cabideiro">🪝 Cabideiro</option>
+                            <option value="Mala">🧳 Mala</option>
+                            <option value="Outro">🎯 Outro</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
                         <label for="descricao">Descrição (opcional):</label>
-                        <input type="text" id="descricao" placeholder="Ex: Com bolso, listrada...">
+                        <input type="text" id="descricao" placeholder="Ex: Com bolso, listrada, nova...">
                     </div>
 
                     <button type="submit" class="btn-add">✅ Adicionar Roupa</button>
@@ -74,21 +93,21 @@
             <section class="stats-section">
                 <h2>📊 Estatísticas</h2>
                 <div class="stats-grid">
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="alert('Total de peças de roupas')">
                         <p class="stat-label">Total de Roupas</p>
                         <p class="stat-value" id="total-roupas">0</p>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="alert('Quantos tipos diferentes você tem')">
                         <p class="stat-label">Tipos Diferentes</p>
                         <p class="stat-value" id="total-tipos">0</p>
                     </div>
-                    <div class="stat-card">
+                    <div class="stat-card" onclick="alert('Quantas cores diferentes você tem')">
                         <p class="stat-label">Cores Diferentes</p>
                         <p class="stat-value" id="total-cores">0</p>
                     </div>
-                    <div class="stat-card">
-                        <p class="stat-label">Tamanhos Diferentes</p>
-                        <p class="stat-value" id="total-tamanhos">0</p>
+                    <div class="stat-card" onclick="alert('Quantos locais diferentes você usa')">
+                        <p class="stat-label">Locais Diferentes</p>
+                        <p class="stat-value" id="total-locais">0</p>
                     </div>
                 </div>
             </section>
@@ -97,16 +116,16 @@
             <section class="list-section">
                 <div class="list-header">
                     <h2>📋 Minhas Roupas</h2>
-                    <button id="btn-limpar-tudo" class="btn-limpar">🗑️ Limpar Tudo</button>
+                    <button id="btn-limpar-tudo" class="btn-limpar" onclick="limparTudo()">🗑️ Limpar Tudo</button>
                 </div>
 
                 <div class="filtros">
                     <input type="text" id="search" placeholder="🔍 Buscar..." class="search-input">
                     <select id="filter-tipo" class="filter-select">
-                        <option value="">Todos os Tipos</option>
+                        <option value="">📋 Todos os Tipos</option>
                     </select>
-                    <select id="filter-tamanho" class="filter-select">
-                        <option value="">Todos os Tamanhos</option>
+                    <select id="filter-local" class="filter-select">
+                        <option value="">🏠 Todos os Locais</option>
                     </select>
                 </div>
 
@@ -117,8 +136,75 @@
         </main>
     </div>
 
+    <!-- Modal de Edição -->
+    <div id="modal-edit" class="modal">
+        <div class="modal-content">
+            <h3>✏️ Editar Roupa</h3>
+            <form id="edit-form">
+                <div class="form-group">
+                    <label for="edit-tipo">Tipo:</label>
+                    <select id="edit-tipo" required>
+                        <option value="Camiseta">👕 Camiseta</option>
+                        <option value="Calça">👖 Calça</option>
+                        <option value="Vestido">👗 Vestido</option>
+                        <option value="Jaqueta">🧥 Jaqueta</option>
+                        <option value="Shorts">🩳 Shorts</option>
+                        <option value="Blusa">👚 Blusa</option>
+                        <option value="Sapato">👞 Sapato</option>
+                        <option value="Meia">🧦 Meia</option>
+                        <option value="Bolsa">👜 Bolsa</option>
+                        <option value="Chapéu">🧢 Chapéu</option>
+                        <option value="Gravata">🎀 Gravata</option>
+                        <option value="Outro">🎁 Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-cor">Cor:</label>
+                    <input type="text" id="edit-cor" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-tamanho">Tamanho:</label>
+                    <select id="edit-tamanho" required>
+                        <option value="PP">PP</option>
+                        <option value="P">P</option>
+                        <option value="M">M</option>
+                        <option value="G">G</option>
+                        <option value="GG">GG</option>
+                        <option value="XG">XG</option>
+                        <option value="Único">Único</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-quantidade">Quantidade:</label>
+                    <input type="number" id="edit-quantidade" min="1" max="999" required>
+                </div>
+                <div class="form-group">
+                    <label for="edit-local">Local:</label>
+                    <select id="edit-local" required>
+                        <option value="Corredor">🏠 Corredor</option>
+                        <option value="Prateleira">📦 Prateleira</option>
+                        <option value="Box">🎁 Box</option>
+                        <option value="Guarda-roupa">🚪 Guarda-roupa</option>
+                        <option value="Cômoda">🗄️ Cômoda</option>
+                        <option value="Cabideiro">🪝 Cabideiro</option>
+                        <option value="Mala">🧳 Mala</option>
+                        <option value="Outro">🎯 Outro</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="edit-descricao">Descrição:</label>
+                    <input type="text" id="edit-descricao" placeholder="Ex: Com bolso, listrada...">
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn-salvar" onclick="salvarEdicao()">💾 Salvar</button>
+                    <button type="button" class="btn-cancelar" onclick="fecharModal()">❌ Cancelar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <footer>
-        <p>💝 Conta Roupas - Versão 1.0 | Seus dados são salvos automaticamente</p>
+        <p>💝 Conta Roupas v3.0 | Seus dados são salvos automaticamente no seu navegador | Desenvolvido com ❤️</p>
     </footer>
 
     <script src="script.js"></script>
