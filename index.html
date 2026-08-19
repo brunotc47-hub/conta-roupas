@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conta Roupas</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>👕 Conta Roupas</h1>
+            <p>Gerencie seu inventário de roupas</p>
+        </header>
+
+        <main>
+            <section class="add-section">
+                <h2>Adicionar Nova Roupa</h2>
+                <form id="roupa-form">
+                    <div class="form-group">
+                        <label for="tipo">Tipo:</label>
+                        <select id="tipo" required>
+                            <option value="">Selecione...</option>
+                            <option value="Camiseta">Camiseta</option>
+                            <option value="Calça">Calça</option>
+                            <option value="Vestido">Vestido</option>
+                            <option value="Jaqueta">Jaqueta</option>
+                            <option value="Shorts">Shorts</option>
+                            <option value="Blusa">Blusa</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="cor">Cor:</label>
+                        <input type="text" id="cor" placeholder="Ex: Azul" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="tamanho">Tamanho:</label>
+                        <select id="tamanho" required>
+                            <option value="">Selecione...</option>
+                            <option value="PP">PP</option>
+                            <option value="P">P</option>
+                            <option value="M">M</option>
+                            <option value="G">G</option>
+                            <option value="GG">GG</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="quantidade">Quantidade:</label>
+                        <input type="number" id="quantidade" value="1" min="1" required>
+                    </div>
+
+                    <button type="submit" class="btn-add">➕ Adicionar</button>
+                </form>
+            </section>
+
+            <section class="stats-section">
+                <h2>📊 Estatísticas</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <p class="stat-label">Total</p>
+                        <p class="stat-value" id="total-roupas">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-label">Tipos</p>
+                        <p class="stat-value" id="total-tipos">0</p>
+                    </div>
+                    <div class="stat-card">
+                        <p class="stat-label">Cores</p>
+                        <p class="stat-value" id="total-cores">0</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="list-section">
+                <h2>📋 Minhas Roupas</h2>
+                <input type="text" id="search" placeholder="🔍 Buscar..." class="search-input">
+                <div id="roupas-list" class="roupas-list">
+                    <p class="empty-message">Nenhuma roupa ainda</p>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
